@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+{% from '_doodles.html' import doodle %}
+{% block title %}{{ title }} | Crumb &amp; Petal{% endblock %}
+{% block main %}
+<section class="page-head {{ 'sage' if page == 'coffee' else '' }}">
+  <p class="hand">{{ 'baked this morning' if page == 'bakery' else 'poured slow' }}</p>
+  <h1>{{ title }}</h1>
+  <p class="lead">{{ intro }}</p>
+</section>
+<section class="menu-wrap">
+  <p class="legend"><span class="tag gf">GF</span> gluten-free &nbsp; <span class="tag lf">LF</span> lactose-free &nbsp; <small>Prices in CZK. Our kitchen also handles wheat, nuts and dairy, so we can't guarantee zero cross-contact.</small></p>
+  {% for cat in categories %}
+  <div class="menu-cat">
+    <h2>{{ doodle('croissant' if loop.index == 1 and page == 'bakery' else 'bread' if page == 'bakery' and loop.index == 2 else 'macaron' if page == 'bakery' else 'cup' if loop.index == 1 else 'leaf') }}{{ cat.category }}</h2>
+    <ul class="menu">
+      {% for i in cat['items'] %}
+      <li><span class="n">{{ i.name }}{% if i.gf %} <span class="tag gf" title="Gluten-free">GF</span>{% endif %}{% if i.lf %} <span class="tag lf" title="Lactose-free">LF</span>{% endif %}</span><span class="dots"></span><span class="p">{{ i.price }}{% if i.unit %} <small>{{ i.unit }}</small>{% endif %}</span></li>
+      {% endfor %}
+    </ul>
+  </div>
+  {% endfor %}
+  <p class="callout"><span class="hand">good to know</span> {{ note }}
+  {% if page == 'bakery' %}Gift boxes: small (6 items) 390, medium (12 items) 720, order 48 hours ahead. Large event orders (20+ items): email at least 5 days ahead.{% endif %}
+  {% if cta %}<br><a class="btn" href="{{ url_for(cta[0]) }}">{{ cta[1] }}</a>{% endif %}</p>
+</section>
+{% endblock %}

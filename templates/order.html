@@ -1,0 +1,55 @@
+{% extends 'base.html' %}
+{% block title %}Order request | Crumb &amp; Petal{% endblock %}
+{% block main %}
+<section class="page-head sage">
+  <p class="hand">tell us what you need</p>
+  <h1>Order request</h1>
+  <p class="lead">For custom bouquets, bakery gift boxes and large orders. This is a request, not a purchase: we confirm every request by email, and you pay by card or cash when you collect or receive it.</p>
+</section>
+<section class="form-wrap">
+  {% if errors %}<div class="errors" role="alert"><b>Almost there:</b><ul>{% for e in errors %}<li>{{ e }}</li>{% endfor %}</ul></div>{% endif %}
+  <form method="post" action="{{ url_for('order') }}" id="orderForm" novalidate>
+    <label>What would you like?
+      <select name="type" id="type" required>
+        <option value="">Choose...</option>
+        {% for k, v in types.items() %}<option value="{{ k }}" {{ 'selected' if f.type == k }}>{{ v }}</option>{% endfor %}
+      </select></label>
+    <div class="two">
+      <label>Your name <input name="name" value="{{ f.name or '' }}" required autocomplete="name"></label>
+      <label>Email <input type="email" name="email" value="{{ f.email or '' }}" required autocomplete="email"></label>
+    </div>
+    <div class="two">
+      <label>Phone (optional) <input name="phone" value="{{ f.phone or '' }}" autocomplete="tel"></label>
+      <label>Date you need it <input type="date" name="date" value="{{ f.date or '' }}" min="{{ today }}" required></label>
+    </div>
+    <p class="hint" id="noticeHint">Notice needed: custom bouquets and gift boxes 48 hours (2 days), large event orders at least 5 days.</p>
+
+    <div class="cond" data-for="custom_bouquet">
+      <label>Budget in CZK (from {{ shop.custom_bouquet.from_price }}) <input type="number" name="budget" min="{{ shop.custom_bouquet.from_price }}" step="10" value="{{ f.budget or '' }}"></label>
+      <fieldset><legend>Pickup or delivery?</legend>
+        <label class="inline"><input type="radio" name="fulfilment" value="pickup" {{ 'checked' if f.fulfilment == 'pickup' }}> Pickup</label>
+        <label class="inline"><input type="radio" name="fulfilment" value="delivery" {{ 'checked' if f.fulfilment == 'delivery' }}> Delivery in Prague ({{ shop.delivery.fee }} CZK, free over {{ shop.delivery.free_over }})</label>
+      </fieldset>
+      <label>Prague delivery address <input name="address" value="{{ f.address or '' }}" autocomplete="street-address"></label>
+    </div>
+    <div class="cond" data-for="gift_box">
+      <label>Box size
+        <select name="box_size">{% for b in shop.gift_boxes.sizes %}<option value="{{ b.name }}" {{ 'selected' if f.box_size == b.name }}>{{ b.name|capitalize }} ({{ b.count }} items), {{ b.price }} CZK</option>{% endfor %}</select></label>
+    </div>
+    <div class="cond" data-for="event">
+      <label>Roughly how many items? (at least {{ shop.events.min_items }}) <input type="number" name="items" min="{{ shop.events.min_items }}" value="{{ f['items'] or '' }}"></label>
+    </div>
+
+    <label>Anything else we should know? <textarea name="notes" rows="4" maxlength="1000">{{ f.notes or '' }}</textarea></label>
+    <div class="hp" aria-hidden="true"><label>Leave this empty <input name="website" tabindex="-1" autocomplete="off"></label></div>
+    <button class="btn" type="submit">Send request</button>
+  </form>
+</section>
+<script>
+(function(){
+  var sel=document.getElementById('type'), conds=document.querySelectorAll('.cond');
+  function sync(){conds.forEach(function(c){c.hidden = c.dataset.for !== sel.value;});}
+  sel.addEventListener('change',sync); sync();
+})();
+</script>
+{% endblock %}

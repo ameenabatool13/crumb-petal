@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+{% from '_doodles.html' import doodle %}
+{% block title %}Our story | Crumb &amp; Petal{% endblock %}
+{% block main %}
+<section class="page-head">
+  <p class="hand">hello, we're glad you're here</p>
+  <h1>Our story</h1>
+</section>
+<section class="prose">
+  {{ doodle('heart', 'big') }}
+  <p>Crumb &amp; Petal is a small, imaginary shop on a quiet corner of Prague: one counter where you can pick up a warm croissant, a flat white and a bunch of tulips in the same visit.</p>
+  <p>It is also a course project. We invented the shop, its menu and its prices to practise building something real end to end: a website, an ordering form, and a chat assistant that only answers from the shop's own information and says so honestly when it doesn't know.</p>
+  <h2>What we care about</h2>
+  <ul>
+    <li><b>Cosy and minimal.</b> A calm place with good bread, good coffee and flowers that make a day better.</li>
+    <li><b>Honest food labels.</b> Gluten-free and lactose-free items are clearly marked, and we're upfront that our kitchen also handles wheat, nuts and dairy.</li>
+    <li><b>Simple promises.</b> Next-day flower delivery in Prague, card or cash, and a team that replies to every request by email.</li>
+  </ul>
+  <p><a class="btn" href="{{ url_for('order') }}">Send an order request</a> &nbsp; <a class="btn ghost" href="{{ url_for('gallery') }}">See the gallery</a></p>
+</section>
+{% endblock %}

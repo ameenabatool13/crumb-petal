@@ -1,0 +1,52 @@
+{% from '_doodles.html' import doodle %}
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>{% block title %}Crumb &amp; Petal | Bakery, coffee and flowers in Prague{% endblock %}</title>
+<meta name="description" content="Crumb &amp; Petal: a (fictional) bakery, coffee bar and flower studio in Prague. Bread, coffee, bouquets and next-day flower delivery.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Caveat:wght@600&family=Cormorant+Garamond:wght@500;600&family=DM+Sans:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+{% block head %}{% endblock %}
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+<header class="top">
+  <a class="brand" href="{{ url_for('home') }}">Crumb &amp; Petal</a>
+  <nav aria-label="Main">
+    {% for ep, label in [('bakery','Bakery'),('coffee','Coffee'),('flowers','Flowers'),('gallery','Gallery'),('about','Our story'),('order','Order request')] %}
+    <a href="{{ url_for(ep) }}"{% if request.endpoint == ep %} aria-current="page"{% endif %}>{{ label }}</a>
+    {% endfor %}
+  </nav>
+</header>
+
+<main id="main">{% block main %}{% endblock %}</main>
+
+<section class="visit" aria-label="Visit us">
+  <div><b>Hours</b><br>{% for h in shop.hours %}{{ h.days }} {{ h.open }}-{{ h.close }}<br>{% endfor %}</div>
+  <div><b>Find us</b><br>{{ shop.address }}<br><span class="fine">(fictional shop)</span></div>
+  <div><b>Contact</b><br>{{ shop.email }}<br>{{ shop.phone }}</div>
+  <div><b>Pay</b><br>Card or cash<br><span class="fine">Walk-in tables only</span></div>
+</section>
+<footer>
+  <span>Fictional shop built for a course project. The chat assistant answers only from the shop's info sheet.</span>
+  <span class="hand">baked, brewed &amp; arranged with care</span>
+</footer>
+
+<div id="panel" role="dialog" aria-label="Chat with Crumb &amp; Petal" aria-modal="false">
+  <h3>Ask Crumb &amp; Petal <small id="modeTag" title="{{ 'Answers come from Claude, grounded in our info sheet' if chat_mode == 'claude' else 'Answers come from our built-in assistant, which only uses the shop info sheet' }}">{{ 'AI assistant' if chat_mode == 'claude' else 'Shop assistant' }}</small>
+    <button id="closeChat" aria-label="Close chat">&times;</button></h3>
+  <div id="log" aria-live="polite"></div>
+  <div id="chips">
+    <button type="button">Opening hours</button><button type="button">Flower delivery</button><button type="button">Gluten-free options</button>
+  </div>
+  <form id="row" autocomplete="off"><input id="q" maxlength="300" placeholder="Ask about the menu, hours, delivery..." aria-label="Your question"><button id="go" type="submit">Send</button></form>
+</div>
+<button id="bubble" aria-expanded="false" aria-controls="panel">Ask us anything</button>
+<script src="{{ url_for('static', filename='js/chat.js') }}" defer></script>
+{% block scripts %}{% endblock %}
+</body>
+</html>

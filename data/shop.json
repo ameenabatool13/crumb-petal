@@ -1,0 +1,91 @@
+{
+  "name": "Crumb & Petal",
+  "address": "Mánesova 14, Praha 2",
+  "email": "hello@crumbandpetal.example",
+  "phone": "+420 700 000 000",
+  "hours": [
+    {"days": "Mon-Sat", "open": "8:00", "close": "19:00"},
+    {"days": "Sun", "open": "9:00", "close": "17:00"}
+  ],
+  "payment": "card and cash only. No Apple Pay or Google Pay.",
+  "tables": "walk-in only, no reservations",
+  "bakery": [
+    {"category": "Croissants and pastries", "items": [
+      {"name": "Butter croissant", "price": 65},
+      {"name": "Almond croissant", "price": 85},
+      {"name": "Pain au chocolat", "price": 75},
+      {"name": "Cardamom bun", "price": 70},
+      {"name": "Cinnamon swirl", "price": 70},
+      {"name": "Apple galette slice", "price": 95, "gf": true}
+    ]},
+    {"category": "Sourdough and bread", "items": [
+      {"name": "Country sourdough loaf", "price": 130},
+      {"name": "Rye loaf", "price": 140},
+      {"name": "Seeded loaf", "price": 150},
+      {"name": "Focaccia slice", "price": 60}
+    ]},
+    {"category": "Cookies and macarons", "items": [
+      {"name": "Brown butter cookie", "price": 55},
+      {"name": "Double chocolate cookie", "price": 55},
+      {"name": "Oat and raisin cookie", "price": 50, "lf": true},
+      {"name": "Flourless almond cookie", "price": 60, "gf": true},
+      {"name": "Macaron", "price": 45, "unit": "each"},
+      {"name": "Box of 6 macarons", "price": 250}
+    ]}
+  ],
+  "drinks": [
+    {"category": "Espresso drinks", "espresso": true, "items": [
+      {"name": "Espresso", "price": 55},
+      {"name": "Americano", "price": 65},
+      {"name": "Flat white", "price": 85},
+      {"name": "Latte", "price": 90},
+      {"name": "Cappuccino", "price": 85},
+      {"name": "Lavender latte", "price": 105}
+    ]},
+    {"category": "Matcha and tea", "items": [
+      {"name": "Matcha latte", "price": 110},
+      {"name": "Strawberry matcha", "price": 120},
+      {"name": "Black tea", "price": 70},
+      {"name": "Jasmine green tea", "price": 70},
+      {"name": "Chamomile", "price": 70}
+    ]}
+  ],
+  "lactose_free_milk": "Lactose-free milk available in any espresso drink at no extra charge.",
+  "dietary_notes": [
+    "Our kitchen also handles wheat, nuts and dairy, so we cannot guarantee zero cross-contact.",
+    "No other dietary or allergen details are listed."
+  ],
+  "flowers": [
+    {"category": "Mix bouquets", "items": [
+      {"name": "Blush Morning", "price": 790},
+      {"name": "Sage Garden", "price": 890},
+      {"name": "Golden Hour", "price": 1090},
+      {"name": "Petal Cloud", "price": 1390}
+    ]},
+    {"category": "Mono bouquets (one flower type)", "items": [
+      {"name": "Tulips", "price": 590},
+      {"name": "Roses", "price": 790},
+      {"name": "Peonies", "price": 1190, "seasonal": true},
+      {"name": "Ranunculus", "price": 890},
+      {"name": "Sunflowers", "price": 490},
+      {"name": "Lisianthus", "price": 690}
+    ]}
+  ],
+  "custom_bouquet": {"from_price": 790, "notice_hours": 48},
+  "delivery": {
+    "area": "Prague only",
+    "cutoff": "14:00",
+    "fee": 99,
+    "free_over": 1500,
+    "notes": [
+      "No same-day delivery and no delivery outside Prague.",
+      "Exact delivery time windows are not guaranteed."
+    ]
+  },
+  "gift_boxes": {"notice_hours": 48, "sizes": [
+    {"name": "small", "count": 6, "price": 390},
+    {"name": "medium", "count": 12, "price": 720}
+  ]},
+  "events": {"min_items": 20, "notice_days": 5},
+  "not_covered": ["Live stock", "today's specials", "calories", "wifi", "parking", "jobs", "wedding flowers", "refunds"]
+}

@@ -1,0 +1,87 @@
+{% extends 'base.html' %}
+{% from '_doodles.html' import doodle %}
+{% block title %}Flowers | Crumb &amp; Petal{% endblock %}
+{% block head %}
+<script type="importmap">{"imports":{"three":"https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.min.js","three/addons/":"https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/"}}</script>
+{% endblock %}
+{% block main %}
+<section class="page-head blush">
+  <p class="hand">picked &amp; tied by hand</p>
+  <h1>Flowers</h1>
+  <p class="lead">Mix and mono bouquets, delivered next day anywhere in Prague.</p>
+</section>
+<section class="menu-wrap">
+  <p class="legend"><small>Prices in CZK.</small></p>
+  {% for cat in categories %}
+  <div class="menu-cat">
+    <h2>{{ doodle('flower' if loop.first else 'leaf') }}{{ cat.category }}</h2>
+    <ul class="menu">
+      {% for i in cat['items'] %}
+      <li><span class="n">{{ i.name }}{% if i.seasonal %} <span class="tag">seasonal</span>{% endif %}</span><span class="dots"></span><span class="p">{{ i.price }}</span></li>
+      {% endfor %}
+    </ul>
+  </div>
+  {% endfor %}
+  <p class="callout"><span class="hand">custom bouquets</span> From a {{ shop.custom_bouquet.from_price }} CZK budget. Order at least {{ shop.custom_bouquet.notice_hours }} hours ahead by email or with the order request form.
+    <br><a class="btn" href="{{ url_for('order', type='custom_bouquet') }}">Request a custom bouquet</a></p>
+
+  <div class="delivery">
+    <h2>Delivery</h2>
+    <ul>
+      <li><b>{{ d.area }}.</b> Next-day delivery: order by {{ d.cutoff }} for delivery the next day.</li>
+      <li>Fee {{ d.fee }} CZK, free for orders over {{ d.free_over }} CZK.</li>
+      <li>{{ d.notes[0] }} {{ d.notes[1] }}</li>
+    </ul>
+  </div>
+</section>
+
+<section class="lab" id="lab" aria-labelledby="lab-h">
+  <h2 id="lab-h">Design a bouquet in 3D</h2>
+  <p class="lead">Pick a flower, colour and finish, then drag to turn it around. A playground for ideas: tell us what you like in a custom bouquet request.</p>
+  <div class="lab-grid">
+    <div class="stage" id="stage">
+      <canvas id="c3d" aria-label="Interactive 3D bouquet. Use the controls beside it to change flowers, colour and finish." role="img" hidden></canvas>
+      <div class="fallback" id="fallback">
+        <svg viewBox="0 0 200 220" role="img" aria-label="Illustration of a bouquet wrapped in sage paper">
+          <g stroke="#8FA58A" stroke-width="3" fill="none"><path d="M100 200V110M100 200L70 105M100 200L130 105M100 200L52 120M100 200L148 120"/></g>
+          <g fill="#E9A9BA"><ellipse cx="100" cy="92" rx="17" ry="24"/><ellipse cx="68" cy="94" rx="15" ry="21"/><ellipse cx="132" cy="94" rx="15" ry="21"/><ellipse cx="50" cy="112" rx="13" ry="18"/><ellipse cx="150" cy="112" rx="13" ry="18"/></g>
+          <path d="M55 140L100 214 145 140z" fill="#8FA58A" stroke="#C9A24B" stroke-width="2"/>
+        </svg>
+        <p id="fallbackMsg">3D preview loads when you scroll here.</p>
+        <button type="button" class="btn" id="load3d">Load 3D preview</button>
+      </div>
+      <div class="hud" id="hud" hidden><span id="fps">&ndash; fps</span></div>
+    </div>
+    <form class="controls" id="controls" onsubmit="return false">
+      <fieldset><legend>Flower</legend>
+        <label><input type="radio" name="type" value="tulip" checked> Tulips</label>
+        <label><input type="radio" name="type" value="rose"> Roses</label>
+        <label><input type="radio" name="type" value="ranunculus"> Ranunculus</label>
+      </fieldset>
+      <fieldset><legend>Colour</legend>
+        <div class="swatches" data-name="color">
+          <button type="button" data-v="#E9A9BA" style="--c:#E9A9BA" aria-label="Blush pink" aria-pressed="true"></button>
+          <button type="button" data-v="#FBF6EE" style="--c:#FBF6EE" aria-label="Cream" aria-pressed="false"></button>
+          <button type="button" data-v="#C9A24B" style="--c:#C9A24B" aria-label="Gold" aria-pressed="false"></button>
+          <button type="button" data-v="#C0405F" style="--c:#C0405F" aria-label="Deep rose" aria-pressed="false"></button>
+          <button type="button" data-v="#F2C14E" style="--c:#F2C14E" aria-label="Sunflower yellow" aria-pressed="false"></button>
+        </div>
+      </fieldset>
+      <fieldset><legend>Wrapping</legend>
+        <div class="swatches" data-name="wrap">
+          <button type="button" data-v="#8FA58A" style="--c:#8FA58A" aria-label="Sage" aria-pressed="true"></button>
+          <button type="button" data-v="#FBF6EE" style="--c:#FBF6EE" aria-label="Cream" aria-pressed="false"></button>
+          <button type="button" data-v="#1E1B1B" style="--c:#1E1B1B" aria-label="Black" aria-pressed="false"></button>
+        </div>
+      </fieldset>
+      <label class="row">Finish
+        <select name="finish"><option value="satin">Satin</option><option value="matte">Matte</option><option value="glossy">Glossy</option></select></label>
+      <label class="row">Stems: <output id="stemsOut">9</output>
+        <input type="range" name="stems" min="5" max="15" value="9"></label>
+      <label class="row inline"><input type="checkbox" name="rotate" checked> Slowly turn</label>
+      <a class="btn" href="{{ url_for('order', type='custom_bouquet') }}">Request something like this</a>
+    </form>
+  </div>
+</section>
+{% endblock %}
+{% block scripts %}<script type="module" src="{{ url_for('static', filename='js/bouquet3d.js') }}"></script>{% endblock %}

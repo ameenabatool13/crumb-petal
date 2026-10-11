@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+{% from '_doodles.html' import doodle %}
+{% block title %}Request received | Crumb &amp; Petal{% endblock %}
+{% block main %}
+<section class="prose center">
+  {{ doodle('heart', 'big') }}
+  <h1>Thank you, {{ f.name }}!</h1>
+  <p>We've got your <b>{{ kind|lower }}</b> request for <b>{{ f.date }}</b>. Your reference is <b class="ref">{{ ref }}</b>.</p>
+  <p>This is a request, not a confirmed order yet. We'll email <b>{{ f.email }}</b> to confirm. If you need us sooner: {{ shop.email }} or {{ shop.phone }}.</p>
+  <p><a class="btn" href="{{ url_for('home') }}">Back to the shop</a></p>
+</section>
+{% endblock %}

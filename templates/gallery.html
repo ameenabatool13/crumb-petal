@@ -1,0 +1,19 @@
+{% extends 'base.html' %}
+{% from '_doodles.html' import doodle %}
+{% block title %}Gallery | Crumb &amp; Petal{% endblock %}
+{% block main %}
+<section class="page-head blush">
+  <p class="hand">a peek inside</p>
+  <h1>Photo gallery</h1>
+  <p class="lead">{% if photos %}A look at what we make.{% else %}Illustrations for now. Real photos appear here as soon as they're added to <code>static/gallery/</code>.{% endif %}</p>
+</section>
+<section class="gallery">
+  {% if photos %}
+    {% for p in photos %}<figure><img loading="lazy" src="{{ url_for('static', filename='gallery/' ~ p) }}" alt="{{ p.rsplit('.',1)[0].replace('-',' ').replace('_',' ') }}"><figcaption>{{ p.rsplit('.',1)[0].replace('-',' ').replace('_',' ') }}</figcaption></figure>{% endfor %}
+  {% else %}
+    {% for name, cap, tone in [('croissant','Butter croissants, fresh from the oven','p1'),('bread','Sourdough, rye and seeded loaves','p2'),('cup','A flat white, poured slow','p3'),('flower','Tulips for the windowsill','p3'),('macaron','Macarons by the box','p1'),('leaf','Sage green wrapping, tied by hand','p2'),('wheat','Seeded loaf','p1'),('heart','Gift boxes for someone special','p3'),('sparkle','Golden hour in the shop','p2')] %}
+    <figure class="{{ tone }}">{{ doodle(name, 'art') }}<figcaption>{{ cap }}</figcaption></figure>
+    {% endfor %}
+  {% endif %}
+</section>
+{% endblock %}

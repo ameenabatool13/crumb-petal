@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+{% from '_doodles.html' import doodle %}
+{% block main %}
+<section class="hero">
+  <span class="hero-doodle d1">{{ doodle('sparkle') }}</span><span class="hero-doodle d2">{{ doodle('flower') }}</span><span class="hero-doodle d3">{{ doodle('wheat') }}</span>
+  <h1 class="neon">Crumb &amp; Petal</h1>
+  <p>Bread baked at dawn, coffee poured slow, flowers delivered to your door.</p>
+  <div class="note">fresh every morning</div>
+</section>
+
+<section class="paths" aria-label="Choose your path">
+  <a class="path p1" href="{{ url_for('bakery') }}">{{ doodle('croissant') }}<h2>Bakery</h2><p>Croissants, sourdough, cookies and macarons.</p><span class="go">See the bakery &rarr;</span></a>
+  <a class="path p2" href="{{ url_for('coffee') }}">{{ doodle('cup') }}<h2>Coffee</h2><p>Espresso drinks, matcha and tea.</p><span class="go">See the drinks &rarr;</span></a>
+  <a class="path p3" href="{{ url_for('flowers') }}">{{ doodle('flower') }}<h2>Flowers</h2><p>Mix and mono bouquets, delivered next day in Prague.</p><span class="go">See the flowers &rarr;</span></a>
+</section>
+
+<section class="strip">
+  <div class="strip-card"><span class="hand">for everyone</span><h3>Gluten-free &amp; lactose-free</h3>
+    <p>A few gluten-free and lactose-free treats, clearly labelled on the menu. Our kitchen also handles wheat, nuts and dairy, so we can't guarantee zero cross-contact.</p></div>
+  <div class="strip-card"><span class="hand">made just for you</span><h3>Gift boxes, events &amp; custom bouquets</h3>
+    <p>Tell us what you need with the <a href="{{ url_for('order') }}">order request form</a>. We confirm every request by email.</p></div>
+  <div class="strip-card"><span class="hand">peek inside</span><h3>Take a look around</h3>
+    <p>See the <a href="{{ url_for('gallery') }}">gallery</a>, or read <a href="{{ url_for('about') }}">our story</a>.</p></div>
+</section>
+{% endblock %}
