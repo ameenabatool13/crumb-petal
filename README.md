@@ -4,7 +4,7 @@ A website for a **fictional** bakery, coffee bar and flower studio in Prague, wi
 
 > Fictional shop, built as a course project (FlyRank AI Fluency track). Address, phone and email are made up.
 
-**Live site:** `<paste your production URL here>`  ·  **Code:** `<paste your repo URL here>`
+**Live site:** https://crumb-petal.vercel.app  ·  **Code:** https://github.com/ameenabatool13/crumb-petal
 
 ![Home page with the neon hero and the chat assistant open](docs/screenshots/chat.png)
 
